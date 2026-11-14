@@ -66,10 +66,10 @@ spec:
                 rm -rf gitops
                 git clone -q https://github.com/duy275/lab-gitops.git gitops
                 cd gitops
-                sed -i "s/newTag: .*/newTag: ${IMAGE_TAG}/" systems/hello/kustomization.yaml
+                sed -i "s/newTag: .*/newTag: ${IMAGE_TAG}/" systems/${APP}/kustomization.yaml
                 git config user.name  "jenkins-bot"
                 git config user.email "jenkins-bot@users.noreply.github.com"
-                git commit -am "hello: ${IMAGE_TAG}" || { echo "tag không đổi, bỏ qua"; exit 0; }
+                git commit -am "${APP}: ${IMAGE_TAG}" || { echo "tag không đổi, bỏ qua"; exit 0; }
                 git -c credential.helper='!f() { echo username=x-access-token; echo password=$GH_TOKEN; }; f' \
                     push origin HEAD:main
                 '''
